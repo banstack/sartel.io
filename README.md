@@ -27,7 +27,7 @@ A real-time multiplayer word game where two players compete to come up with word
 
 ### Deployment
 - **Platform**: Railway
-- **Architecture**: Monorepo (separate backend/frontend services)
+- **Architecture**: Monorepo (unified service - backend serves frontend)
 
 ## Project Structure
 
@@ -102,6 +102,41 @@ sartel.io/
 
 4. Open browser to `http://localhost:5173`
 
+## Production Deployment
+
+### Quick Start with Railway
+
+1. **Build the application locally (optional test)**:
+   ```bash
+   ./build.sh
+   ```
+
+2. **Deploy to Railway**:
+   - Create a new project on [Railway](https://railway.app)
+   - Connect your GitHub repository
+   - Railway will automatically detect and deploy using `railway.json` and `nixpacks.toml`
+   - Your app will be live at the provided Railway URL
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+### Manual Production Build
+
+To test the production build locally:
+```bash
+# Build frontend
+cd frontend
+npm install
+npm run build
+cd ..
+
+# Start backend (serves both API and frontend)
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Visit `http://localhost:8000` to see the production build.
+
 ## How to Play
 
 1. **Create a Lobby**: Click "Create New Lobby" to generate a unique 5-character code
@@ -137,9 +172,9 @@ sartel.io/
 - [ ] Answer reveal and self-judging
 
 ### 📋 Phase 3: Production Ready
+- [x] Railway deployment configuration
 - [ ] Redis integration for storage
-- [ ] Analytics tracking
-- [ ] Railway deployment configuration
+- [ ] Enhanced analytics tracking
 - [ ] CI/CD pipeline
 - [ ] Error handling and edge cases
 
