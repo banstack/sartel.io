@@ -2,8 +2,8 @@ import random
 import string
 from datetime import datetime
 from typing import Optional
-from app.models import Lobby, GameState, LobbyState
-from app.storage.memory_store import store
+from backend.app.models import Lobby, GameState, LobbyState
+from backend.app.storage.memory_store import store
 
 
 def generate_lobby_id(length: int = 5) -> str:

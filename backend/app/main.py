@@ -8,10 +8,10 @@ import json
 import uuid
 from pathlib import Path
 
-from app.models import CreateLobbyResponse, JoinLobbyRequest
-from app.websocket import manager
-from app.game import lobby as lobby_service
-from app.storage.memory_store import store
+from backend.app.models import CreateLobbyResponse, JoinLobbyRequest
+from backend.app.websocket import manager
+from backend.app.game import lobby as lobby_service
+from backend.app.storage.memory_store import store
 
 load_dotenv()
 
