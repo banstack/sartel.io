@@ -5,7 +5,7 @@ import { Lobby } from './components/Lobby'
 function App() {
   const [view, setView] = useState<'home' | 'lobby'>('home')
   const [lobbyId, setLobbyId] = useState<string | null>(null)
-  const [playerId, setPlayerId] = useState<string>(() => {
+  const [playerId] = useState<string>(() => {
     // Generate or retrieve player ID
     const stored = localStorage.getItem('sartel-player-id')
     if (stored) return stored
