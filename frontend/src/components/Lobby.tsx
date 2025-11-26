@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useWebSocket } from '@/hooks/useWebSocket'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -14,7 +14,7 @@ export function Lobby({ lobbyId, playerId, onLeave }: LobbyProps) {
   const [playerCount, setPlayerCount] = useState(0)
   const [gameStarted, setGameStarted] = useState(false)
 
-  const { isConnected, sendMessage, lastMessage } = useWebSocket(
+  const { isConnected, sendMessage } = useWebSocket(
     lobbyId,
     playerId,
     {
