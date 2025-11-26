@@ -1,0 +1,50 @@
+.app {
+  width: 100%;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.home .actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #646cff;
+  color: white;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #535bf2;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.lobby {
+  padding: 2rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
