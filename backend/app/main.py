@@ -1,9 +1,12 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 import os
 import json
 import uuid
+from pathlib import Path
 
 from app.models import CreateLobbyResponse, JoinLobbyRequest
 from app.websocket import manager
@@ -22,6 +25,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Get the path to the frontend build directory
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+FRONTEND_BUILD_DIR = BASE_DIR / "frontend" / "dist"
 
 
 @app.get("/health")
@@ -201,3 +208,25 @@ async def websocket_endpoint(websocket: WebSocket, lobby_id: str, player_id: str
     except Exception as e:
         print(f"WebSocket error: {str(e)}")
         manager.disconnect(lobby_id, player_id)
+
+
+# Mount static files if the frontend build directory exists
+if FRONTEND_BUILD_DIR.exists():
+    # Mount static assets (JS, CSS, images, etc.)
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_BUILD_DIR / "assets")), name="assets")
+
+    # Serve index.html for all other routes (SPA routing)
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Serve the frontend application for all non-API routes"""
+        # Don't serve frontend for API routes or WebSocket routes
+        if full_path.startswith("api/") or full_path.startswith("ws/") or full_path == "health":
+            raise HTTPException(status_code=404, detail="Not found")
+
+        index_file = FRONTEND_BUILD_DIR / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        else:
+            raise HTTPException(status_code=404, detail="Frontend not built")
+else:
+    print("Warning: Frontend build directory not found. Only API endpoints will be available.")
