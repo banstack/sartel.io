@@ -1,6 +1,6 @@
 from typing import Optional, Dict
 from datetime import datetime, timedelta
-from app.models import Lobby, GameState, Analytics, LobbyState
+from backend.app.models import Lobby, GameState, Analytics, LobbyState
 
 
 class MemoryStore:
